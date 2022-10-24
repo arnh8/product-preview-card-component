@@ -1,11 +1,23 @@
 import "./CardComp.css";
 import productDesktop from "./assets/image-product-desktop.jpg";
+import productMobile from "./assets/image-product-mobile.jpg";
 import cartIcon from "./assets/icon-cart.svg";
+import { useState, useEffect } from "react";
 
 function CardComp() {
+    const [matches, setMatches] = useState(
+        window.matchMedia("(min-width: 375px)").matches
+    );
+
+    useEffect(() => {
+        window
+            .matchMedia("(min-width: 375px)")
+            .addEventListener("change", (e) => setMatches(e.matches));
+    }, []);
+
     return (
         <div className="CardComp">
-            <img src={productDesktop} alt="Product" />
+            <img src={matches ? productDesktop : productMobile} alt="Product" />
             <div className="productInfo">
                 <div className="productType">P E R F U M E</div>
                 <div className="productName">
@@ -20,7 +32,7 @@ function CardComp() {
                     <div className="originalPrice">$169.99</div>
                 </div>
                 <div className="addToCartButton">
-                    <img src={cartIcon} />
+                    <img src={cartIcon} alt="cIcon" />
                     Add to Cart
                 </div>
             </div>
